@@ -7,9 +7,9 @@ import os
 
 #store_name = "pnp"
 url = "https://openpricengine.com/api/v0.1/pnp/products"
-params = {'productname':'milk'
-          ,'range':'2023-04-08to2023-04-10'
-          ,'currency':'ZAR'
+params = {'productname':'milk',
+          'range':'2023-04-08to2023-04-10',
+          'currency':'ZAR'
           }
 
 
@@ -20,6 +20,6 @@ data_df = pd.DataFrame([response.json()]).T
 data_df = data_df.rename(columns={data_df.columns[0]: 'products'})
 
 
-print(data_df.head())
+print(data_df.head(50))
 
-data_df.to_csv('../data/data_export_params.csv', index=False,mode='w')
+
