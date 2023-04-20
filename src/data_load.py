@@ -19,8 +19,12 @@ print('choose dates, a storetype and a set of keywords between meat and staple f
 
 
 #%% 
-product_keyword=meat
-ope_df = extract_data(start_date='2023-01-01',end_date='2023-04-02', product_keyword=product_keyword)
+product_keyword = meat
+
+ope_df = extract_data(
+    start_date='2023-01-01'
+    ,end_date='2023-04-02'
+    , product_keyword=product_keyword)
 
 
 
