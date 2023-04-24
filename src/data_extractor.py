@@ -13,8 +13,10 @@ import os
 
 #%%
 
-def extract_data(product_keyword:str='meat', start_date:str='2023-04-01', end_date:str='2023-04-02', store_name:str='pnp'
-                  
+def extract_data(product_keyword:str='meat'
+                 , start_date:str='2023-04-01'
+                 , end_date:str='2023-04-02'
+                 , store_name:str='pnp'   
             ) -> pd.DataFrame:
     # set working directory to the folder that contains the cloned repository
     # on your pc, create an environment variable named 'MY_REPO_HOME' with the folder path of where the git repo is cloned to
@@ -22,14 +24,12 @@ def extract_data(product_keyword:str='meat', start_date:str='2023-04-01', end_da
     os.chdir(home_repo)
 
     
-    
-
     url = f"https://openpricengine.com/api/v0.1/{store_name}/products/query?"
     
     params = {'productname':product_keyword,
               'range':f'{start_date}to{end_date}',
               'currency':'Default',
-              'store':'pnp'
+              'store':store_name
               }    
     
     response = requests.get(url, params=params)

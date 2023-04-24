@@ -5,6 +5,8 @@ This project uses the platform [Open Price Engine](https://www.openpricengine.co
 ## Usage
 
 To execute this process, open the "data_load.py" file, pass in the start date, end date and desired product type and run it. The resulting CSV file will be located in the data folder.
+On your pc, create an environment variable named 'MY_REPO_HOME' with the folder path of where the git repo is cloned to.
+This sets the working directory to the folder that contains the cloned repository.
 
 ## Requirements
 

@@ -17,23 +17,27 @@ print('choose dates, a storetype and a set of keywords between meat and staple f
 
 
 
-
-#%% 
+#%% EXTRACT
 product_keyword = meat
 
 ope_df = extract_data(
     start_date='2023-01-01'
     ,end_date='2023-04-02'
-    , product_keyword=product_keyword)
+    , product_keyword=product_keyword
+    ,store_name='pnp'
+    )
 
+#%% rename df to contain keywords
 
-
-#%% LOAD
 def get_keyword_name(x=product_keyword):
     for name, value in globals().items():
         if value is x:
             return name
     return None  # variable not found
 
+new_var_name = 'ope_df_' + get_keyword_name()
+globals()[new_var_name] = ope_df
+del ope_df, new_var_name
 
+#%% LOAD
 ope_df.to_csv('ope_prices/data/'+get_keyword_name()+'_prices_over_time.csv', index=False,mode='w')
