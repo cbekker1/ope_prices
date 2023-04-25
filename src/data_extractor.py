@@ -10,6 +10,7 @@ Created on Wed Apr 19 13:55:55 2023
 import requests
 import pandas as pd
 import os
+import json
 
 #%%
 
@@ -33,13 +34,24 @@ def extract_data(product_keyword:str='meat'
               }    
     
     response = requests.get(url, params=params)
+    error_json = None  # Define the variable outside of the if/else block
 
     if response.status_code == 200:
         data_df = pd.DataFrame([response.json()]).T
-        # Do something with the data
+     
     else:
-        print(f"Error: {response.status_code} - {response.text}")
+        error_json = {
+            "error": {
+                "code": response.status_code,
+                "message": response.text
+            }
+        }
+        error_message = json.dumps(error_json)
+        print(f"Error: {error_message}")
+        return error_message
 
+
+    # transform data
     data_df = data_df.rename(columns={data_df.columns[0]: 'products'})
     data_df = pd.json_normalize(data_df['products'])
     data_df = data_df.explode('Price over time')
@@ -67,5 +79,7 @@ def extract_data(product_keyword:str='meat'
                  ]).rename(
                      columns={'Product Name': 'ProductName'})
     return data_df
+
+
 
 

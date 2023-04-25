@@ -17,4 +17,6 @@ def set_keywords():
                     , "Plantains", "Quinoa", "Buckwheat", "Sorghum", "Rye"
                     , "Chickpeas", "Peas", "Green peas"]
     
-    return meat, staple_foods
+    stores = ['pnp','spar','FriendlyGrocerwaverton']
+    
+    return meat, staple_foods, stores
