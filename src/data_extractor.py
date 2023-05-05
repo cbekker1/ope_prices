@@ -18,7 +18,7 @@ def extract_data(product_keyword:str='meat'
                  , start_date:str='2023-04-01'
                  , end_date:str='2023-04-02'
                  , store_name:str='pnp'   
-            ) -> pd.DataFrame:
+            ) -> pd.DataFrame:  
     # set working directory to the folder that contains the cloned repository
     # on your pc, create an environment variable named 'MY_REPO_HOME' with the folder path of where the git repo is cloned to
     home_repo = os.environ.get('MY_REPO_HOME')
@@ -64,7 +64,7 @@ def extract_data(product_keyword:str='meat'
     # Add new columns to the DataFrame for every key in the set
     for key in keys:
         data_df[key] = data_df['Price over time'].apply(lambda x: x.get(key))
-
+    data_df = data_df.sort_values(by=["Product Name", "Date"])
     data_df = data_df.reindex(
         columns=['Date'
                  , 'Price'
@@ -78,8 +78,37 @@ def extract_data(product_keyword:str='meat'
                  ,'Price over time'
                  ]).rename(
                      columns={'Product Name': 'ProductName'})
+    data_df['Date'] = pd.to_datetime(data_df['Date'])
+    data_df['Price'] = pd.to_numeric(data_df['Price'])
+
+    
     return data_df
 
+def price_calc(dataframe):
+    # drop nan's
+    dataframe.dropna(subset=['Price','Date'], inplace=True)
+    
+    # Add DoD diffs        
+    dataframe.insert(2,'DayOnDayPriceDiff'
+        , dataframe.groupby(
+            'ProductName')[
+                'Price'].pct_change())
+                
+    # Add cumulative differences
+ 
+    dataframe.insert(3,'PricesCumDiff', dataframe.groupby(
+        ['ProductName'])['DayOnDayPriceDiff'].cumsum()) 
+           
+                                        
+    return dataframe
 
 
 
+def calculate_metrics(df):
+    # Group data by date and calculate metrics
+    metrics_df = df.groupby('Date').agg({
+        'ProductName': pd.Series.nunique,
+        'PricesCumDiff': 'mean'
+    }).reset_index()
+    
+    return metrics_df
