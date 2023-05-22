@@ -85,6 +85,8 @@ def extract_data(product_keyword:str='meat'
     return data_df
 
 def price_calc(dataframe):
+    # change 
+    dataframe['Price'] = pd.to_numeric(dataframe['Price'], errors='coerce')
     # drop nan's
     dataframe.dropna(subset=['Price','Date'], inplace=True)
     
@@ -110,5 +112,6 @@ def calculate_metrics(df):
         'ProductName': pd.Series.nunique,
         'PricesCumDiff': 'mean'
     }).reset_index()
-    
+    metrics_df['Price index'] = metrics_df['PricesCumDiff'] + 1
+    metrics_df['Price index'] *= 100
     return metrics_df

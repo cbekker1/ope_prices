@@ -23,7 +23,7 @@ print('Choose one of the available stores:'\
 #%% EXTRACT
 product_keyword = meat
 store = 'pnp'
-start_date, end_date = '2022-12-01', '2023-04-01'
+start_date, end_date = '2023-03-01', '2023-04-01'
 
 ope_df = extract_data(
     start_date=start_date

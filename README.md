@@ -1,6 +1,32 @@
 # OPE Retail Price Loader
 
-This project uses the platform [Open Price Engine](https://www.openpricengine.com/) to extract, transform, and load data into a CSV file located in the data folder and create a line graph using the loaded data. 
+This project uses the platform [Open Price Engine](https://www.openpricengine.com/) to extract, transform, and load data into a CSV file located in the data folder. In addition, it lets the user create a line graph using the loaded data. 
+
+## Simplified process diagram
+
+                  +--------------+
+                  |    OPE (API) |
+                  +--------------+
+                         |
+                         |
+                         v
+                  +--------------+
+                  |     ETL	   |
+                  +--------------+
+                         |
+                         |
+                         v
+                  +--------------+
+                  |   	CSVs     |
+                  +--------------+
+                         |
+                         |
+                         v
+                  +--------------+
+                  |   Visual     |
+                  |(Line Chart)  |
+                  +--------------+
+
 
 ## Usage
 
